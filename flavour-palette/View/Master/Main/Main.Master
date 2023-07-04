@@ -1,0 +1,233 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Main.master.cs" Inherits="flavour_palette.View.Master.Main.Main" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>Flavour Palette</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style type="text/tailwindcss">
+        @layer components {
+            .nav-menu {
+                @apply text-primary text-subheading font-medium border-b-2 border-transparent hover:text-secondary hover:border-secondary transition duration-500
+            }
+
+            .btn-primary {
+                @apply flex justify-center items-center px-5 py-1 text-white text-subheading font-medium rounded bg-primary border-2 border-primary hover:shadow-md hover:shadow-primary/50 transition duration-500
+            }
+
+            .btn-secondary {
+                @apply flex justify-center items-center px-5 py-1 text-primary text-subheading font-medium rounded bg-none border-2 border-primary hover:bg-primary hover:text-white hover:shadow-md hover:shadow-primary/50 transition duration-500
+            }
+
+            .form-label {
+                @apply text-secondary text-name font-medium
+            }
+
+            .input-form {
+                @apply w-full mt-2 rounded border-0 outline-none px-3 py-2 text-secondary text-name font-medium ring-1 ring-inset ring-dgray placeholder:text-subname placeholder:text-dgray placeholder:font-normal focus:ring-2 focus:ring-inset focus:ring-orange focus:shadow-sm
+            }
+
+            .footer-label {
+                @apply font-light text-name text-white
+            }
+
+            .line {
+                @apply w-full h-1 bg-primary bg-opacity-20
+            }
+
+            .title {
+                @apply text-primary text-title font-semibold
+            }
+        }
+    </style>
+    <script>
+          tailwind.config = {
+              theme: {
+                  extend: {
+                      colors: {
+                          primary: '#727C4A',
+                          secondary: '#343C2D',
+                          orange: '#E39D36',
+                          lgray: '#F3F3F3',
+                          dgray: '#9E9E9E'
+                      },
+                      fontFamily: {
+                          sans: ['Poppins', 'sans-serif'],
+                      },
+                      fontSize: {
+                          title: '1.875rem',
+                          heading: '1.3125rem',
+                          subheading: '1.125rem',
+                          name: '1rem',
+                          subname: '0.875rem',
+                      },
+                      borderRadius: {
+                          'default': '5px',
+                      },
+                   }
+              }
+          }
+    </script>
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <style>
+        body{
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+    </style>
+    <nav class="fixed top-0 left-0 w-screen shadow-sm bg-white z-50">
+        <div class="w-[85%] flex items-center justify-between mx-auto py-4">
+            <div class="flex items-center gap-10">
+                <a href="../../Webform/Main/Home.aspx">
+                    <img src="../../../Storage/assets/general/logo.png" class="h-14" alt="flavour-palette logo" />
+                </a>
+                <a href="../../Webform/Main/Home.aspx" class="nav-menu <%= (Request.Url.AbsolutePath.Substring(Request.Url.AbsolutePath.LastIndexOf("/")+1) == "Home.aspx") ? "text-secondary border-secondary" : "text-primary" %>">Home</a>
+                <a href="../../Webform/Main/Menu.aspx" class="nav-menu <%= (Request.Url.AbsolutePath.Substring(Request.Url.AbsolutePath.LastIndexOf("/")+1) == "Menu.aspx") ? "text-secondary border-secondary" : "text-primary" %>">Menu</a>
+                <a onClick="document.getElementById('about-us').scrollIntoView();" class="nav-menu">About Us</a>
+            </div>
+            
+            
+            <% if (Session["userRole"] as String != "Admin" && Session["userRole"] as String != "Customer")
+                {%>
+               <div class="flex gap-5">
+                    <a href="../../Webform/Authentication/Login.aspx" class="btn-secondary">Sign In</a>
+                    <a href="../../Webform/Authentication/Register.aspx" class="btn-primary">Sign Up</a>
+                </div>
+            <% } else
+                {%>
+                <div class="flex gap-10 items-center justify-center">
+                    <% if (Session["userRole"] as String == "Customer")
+                        {%>
+                        <a href="../../Webform/Main/Cart.aspx" ><img src="../../../Storage/assets/nav-bar/cart.png" alt="cart logo" class="h-7 w-auto"></a>
+                    <% } %>
+                    <img id="profile-btn" src="../../../Storage/profile/user/default-user.png" class="cursor-pointer w-12 h-12 rounded-full border border-primary object-cover">
+                </div>
+            <%  }%>
+                
+        </div>
+    </nav>
+    <form id="form1" runat="server">
+        <div class="mt-[88px] min-h-screen">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+    <footer>
+        <div class="px-[7.5%] py-20  bg-gradient-to-br from-[#FAD6A0] via-[#BAB183] to-[#818666] w-screen h-auto flex items-start justify-between">
+            <div class="w-[25%]">
+                <div><a href="../../Webform/Main/Home.aspx"><img src="../../../Storage/assets/general/logo.png" class="h-20"></a></div>
+                <div class="mt-5 font-semibold text-subheading text-primary">About Us</div>
+                <div class="mt-2 footer-label">We are Flavour Palette, an online catering service that allows you to enjoy quality meals every day.</div>
+            </div>
+
+            <div class="flex flex-col items-start gap-3 w-1/5">
+                <div class="font-semibold text-subheading text-primary">Fast Links</div>
+                <div class="footer-label"><a href="#">Our Menu</a></div>
+                <div class="footer-label"><a href="#">Promotions</a></div>
+                <div class="footer-label"><a href="#">Partners</a></div>
+                <div class="footer-label"><a href="#">Contact Us</a></div>
+            </div>
+
+            <div class="flex flex-col items-start gap-3 w-1/5">
+                <div class="font-semibold text-subheading text-primary">Contact Info</div>
+                <div class="footer-label"><a href="https://twitter.com/">Twitter</a></div>
+                <div class="footer-label"><a href="https://www.facebook.com/">Facebook</a></div>
+                <div class="footer-label"><a href="https://www.instagram.com/">Instagram</a></div>
+                <div class="footer-label"><a href="https://web.whatsapp.com/">Whatsapp</a></div>
+            </div>
+
+            <div class="flex flex-col items-baseline gap-1 w-[25%]">
+                <div class="font-semibold text-subheading text-primary">Newsletter</div>
+                <div class="my-2 footer-label">Stay up to date with us</div>
+                <div class="relative flex items-center w-full h-fit">
+                    <input type="email" id="email" name="email" required class="block w-full rounded border-0 py-1.5 px-3 text-primary placeholder:text-dgray sm:text-sm sm:leading-6" placeholder="Email">
+                    <div class="absolute" style="right: -2px; cursor: pointer;">
+                        <button class="py-1.5 px-3 bg-orange text-white rounded">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-4 w-full flex items-center justify-center">
+            <p style="color:rgb(172, 172, 172);">
+                &copy; 2023 Flavour Palette All Right Reserved
+            </p>
+        </div>
+    </footer>
+
+    <div id="layer" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+    <div id="profile-modal" class="hidden fixed w-5/12 z-50 p-10 bg-white shadow-md rounded" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <div class="flex items-center rounded justify-between p-3 border border-primary border-opacity-20 bg-white shadow-md">
+                <div class="flex items-center gap-5">
+                    <img id="profile-btn" src="../../../Storage/profile/user/default-user.png" class="w-12 h-12 rounded-full border border-primary object-cover">
+                    <div>
+                        <p class="font-semibold text-heading text-secondary"><%=Session["userName"] as String %></p>
+                        <p class="font-light text-name" style="color: rgba(52, 60, 45, 0.5);"><%=Session["userEmail"] as String %></p>
+                    </div>
+                </div>
+                <a href="../../Webform/Main/Profile.aspx"><i class="far fa-edit fa-lg text-secondary"></i></i></a>
+            </div>
+            <div class="mt-5 flex">
+                <div class="flex flex-col gap-3 flex-grow border-r border-r-primary">
+                    <div class="flex gap-2 items-center text-left">
+                        <i class="fa fa-venus-mars text-secondary"></i>
+                        <p class="font-medium text-subheading text-secondary text-left"><%=Session["userGender"] as String %></p>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-between flex-grow ml-5 gap-16">
+                    <div class="flex flex-col gap-3">
+                        <%if (Session["userRole"] as String == "Customer")
+                            {%>
+                            <a class="text-primary text-subheading font-medium hover:text-secondary" href="../../Webform/Main/Cart.aspx">Cart</a>
+                            <a class="text-primary text-subheading font-medium hover:text-secondary" href="../../Webform/Main/History.aspx">Order History</a>
+                        <%}
+                            else
+                            { %>
+                            <a class="text-primary text-subheading font-medium hover:text-secondary" href="../../Webform/Main/ViewOrder.aspx">View Order</a>
+                        <%} %>
+                        <a class="cursor-pointer text-primary text-subheading font-medium hover:text-secondary" href="../../Webform/Logout.aspx">Logout</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    <%if (Session["userRole"] as String == "Customer" || Session["userRole"] as String == "Admin")
+        {%>
+    <script>
+        let layer = document.getElementById('layer');
+        let profileBtn = document.getElementById('profile-btn');
+        let profileModal = document.getElementById('profile-modal');
+        let cancelBtn = document.getElementById('cancel-btn');
+        let withdrawLabel = document.getElementById('withdraw-pocket');
+        let withdrawModal = document.getElementById('withdraw-modal');
+
+        profileBtn.addEventListener('click', function () {
+            layer.style.display = 'none';
+            profileModal.style.display = 'none';
+
+            layer.style.display = 'block';
+            profileModal.style.display = 'block';
+        });
+
+        layer.addEventListener('click', function () {
+            layer.style.display = 'none';
+            profileModal.style.display = 'none';
+        });
+
+    </script>
+    <%} %>
+</body>
+</html>

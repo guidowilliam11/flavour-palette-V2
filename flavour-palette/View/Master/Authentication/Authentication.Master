@@ -1,0 +1,130 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Authentication.master.cs" Inherits="flavour_palette.View.Master.Authentication.Authentication" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>Flavour Palette</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style type="text/tailwindcss">
+        @layer components {
+            .nav-menu {
+                @apply text-primary text-subheading font-medium border-b-2 border-transparent hover:text-secondary hover:border-secondary transition duration-500
+            }
+
+            .btn-primary {
+                @apply flex justify-center items-center px-5 py-1 text-white text-subheading font-medium rounded bg-primary border-2 border-primary hover:shadow-md hover:shadow-primary/50 transition duration-500
+            }
+
+            .btn-secondary {
+                @apply flex justify-center items-center px-5 py-1 text-primary text-subheading font-medium rounded bg-none border-2 border-primary hover:bg-primary hover:text-white hover:shadow-md hover:shadow-primary/50 transition duration-500
+            }
+
+            .form-label {
+                @apply text-secondary text-name font-medium
+            }
+
+            .input-form {
+                @apply w-full mt-2 rounded border-0 outline-none px-3 py-2 text-secondary text-name font-medium ring-1 ring-inset ring-dgray placeholder:text-subname placeholder:text-dgray placeholder:font-normal focus:ring-2 focus:ring-inset focus:ring-orange focus:shadow-sm
+            }
+
+            .footer-label {
+                @apply font-light text-name text-white
+            }
+
+            .line {
+                @apply w-full h-1 bg-primary bg-opacity-20
+            }
+
+            .title {
+                @apply text-primary text-title font-semibold
+            }
+        }
+    </style>
+    <script>
+          tailwind.config = {
+              theme: {
+                  extend: {
+                      colors: {
+                          primary: '#727C4A',
+                          secondary: '#343C2D',
+                          orange: '#E39D36',
+                          lgray: '#F3F3F3',
+                          dgray: '#9E9E9E'
+                      },
+                      fontFamily: {
+                          sans: ['Poppins', 'sans-serif'],
+                      },
+                      fontSize: {
+                          title: '1.875rem',
+                          heading: '1.3125rem',
+                          subheading: '1.125rem',
+                          name: '1rem',
+                          subname: '0.875rem',
+                      },
+                      borderRadius: {
+                          'default': '5px',
+                      },
+                   }
+              }
+          }
+    </script>
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body class="relative flex flex-col items-center justify-center w-screen h-fit p-20">
+    <style>
+        body{
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+    </style>
+    <form id="form1" runat="server" class="w-full">
+    <img class="fixed top-0 left-0 -z-10 w-full h-full object-cover" src="../../../Storage/assets/general/header-photo.png" alt="header-photo.png">
+        <div class="flex flex-col bg-white bg-opacity-80 rounded shadow z-10 items-center justify-center w-7/12 h-fit m-auto">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+    <script>
+        var flag = 0;
+        function password() {
+            if (flag == 1) {
+                document.getElementById('tbPassword').type = 'password';
+                document.getElementById('eye-icon').classList.remove('fa-eye');
+                document.getElementById('eye-icon').classList.add('fa-eye-slash');
+                flag = 0;
+            } else {
+                document.getElementById('tbPassword').type = 'text';
+                document.getElementById('eye-icon').classList.remove('fa-eye-slash');
+                document.getElementById('eye-icon').classList.add('fa-eye');
+                flag = 1;
+            }
+        }
+
+        function confirm_password() {
+            if (flag == 1) {
+                document.getElementById('tbPasswordConf').type = 'password';
+                document.getElementById('eye-icon').classList.remove('fa-eye');
+                document.getElementById('eye-icon').classList.add('fa-eye-slash');
+                flag = 0;
+            } else {
+                document.getElementById('tbPasswordConf').type = 'text';
+                document.getElementById('eye-icon').classList.remove('fa-eye-slash');
+                document.getElementById('eye-icon').classList.add('fa-eye');
+                flag = 1;
+            }
+        }
+    </script>
+</body>
+</html>
